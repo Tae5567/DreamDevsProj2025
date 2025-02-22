@@ -34,7 +34,7 @@ def process_transactions(file_path, sales_volume, sales_value, products_sold, sa
             products = line[2].strip("[]").split("|") # notice that products/product quantities is inside []  and separated by | in the data
             sale_amount = float(line[3])  
 
-        #Track sales 
+        #Track products sold
         total_products = 0
         for product in products: 
             product_id, product_quantity = map(int, product.split(':'))
