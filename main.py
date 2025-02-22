@@ -20,8 +20,8 @@ from calculate_metrics import (
     highest_sales_staff_monthly,
     highest_hour_avg_transactions)
 
-#transaction data directory
-DATA_DIR = "sample" #renamed to sample-data
+#Transaction data directory
+DATA_DIR = "sample" #renamed to sample, containing data files in test-case-1
 
 def report_metrics(sales_volume, sales_value, product_sales, monthly_sales_staff, avg_transaction_hourly):
     
@@ -33,7 +33,6 @@ def report_metrics(sales_volume, sales_value, product_sales, monthly_sales_staff
     highest_products_sold = most_products_sold(product_sales)
     highest_sales_staff = highest_sales_staff_monthly(monthly_sales_staff)
     highest_hour_onAvg = highest_hour_avg_transactions(avg_transaction_hourly)
-    #avg_sales_volume = sum(avg_transaction_hour[highest_hour_onAvg]/len(avg_transaction_hour))
 
 
     #Print a report of the metrics
@@ -50,8 +49,10 @@ if __name__ == "__main__":
     if not os.path.exists(DATA_DIR):
         print("Error! Data directory does not exist!")
         exit(1)
+    else:
+        print("Data files exist")
     
-    #If directory exists, process transaction files
+    #If the directory exists, process transaction files
     sales_volume, sales_value, product_sales, monthly_sales_staff, avg_transaction_hourly = process_files(DATA_DIR) #taking DATA_DIR as folder_path
 
     #Show report

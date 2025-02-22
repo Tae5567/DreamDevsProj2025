@@ -11,7 +11,8 @@ Reports:
 #use max function to return highest values vs key object of same data type
 
 def highest_sales_volume(sales_volume):
-    return max(sales_volume, key=sales_volume.get)
+    return max(sales_volume, key=sales_volume.get) #max is giving value error: empty sequence arg....
+# should retun max values of the two arguments
 
 def highest_sales_value(sales_value):
     return max(sales_value, key=sales_value.get)

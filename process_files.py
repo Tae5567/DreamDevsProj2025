@@ -1,7 +1,7 @@
 import os
 import glob
 import datetime
-from collections import defaultdict
+
 
 SAMPLE_DIR = "sample-data"
 
@@ -29,18 +29,16 @@ def process_transactions(file_path, sales_volume, sales_value, products_sold, sa
     with open(file_path, "r") as file:
         for line in file:
             line = line.strip().split(',') # notice that each component/variable of a transaction line is split by a comma
-            if len(line) != 4:
-                continue
 
             # A transaction line's components/variiables
             sales_staff_id = int(line[0])
             transaction_date_time = line[1]
-            products = line[2].strip("[]").split("|") # notice that products/product quantities is inside [] in the data
+            products = line[2].strip("[]").split("|") # notice that products/product quantities is inside []  and separated by | in the data
             sale_amount = float(line[3])  
 
         #Track sales 
         total_products = 0
-        for product in products: # each product with its corresponding quantity is separated by | before the next produc
+        for product in products: 
             product_id, product_quantity = map(int, product.split(':'))
             total_products += product_quantity
             products_sold[product_id] = products_sold.get(product_id, 0) + product_quantity
