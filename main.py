@@ -12,7 +12,7 @@ Task: Given a sample data folders of .txt transaction files, write software that
 
 """
 import os
-from process_files import process_files, sales_volume, sales_value, products_sold, sales_staff_monthly, avg_transaction_hour
+from process_files import process_files
 from calculate_metrics import (
     highest_sales_volume, 
     highest_sales_value,
@@ -23,10 +23,13 @@ from calculate_metrics import (
 #transaction data directory
 DATA_DIR = "sample" #renamed to sample-data
 
-def report_metrics(sales_volume_daily, sales_value_daily, product_sales, monthly_sales_staff, avg_transaction_hourly):
+def report_metrics(sales_volume, sales_value, product_sales, monthly_sales_staff, avg_transaction_hourly):
+    
+    print("\n Monieshop Analytics Report \n")
 
-    highest_salesVolume_day = highest_sales_volume(sales_volume_daily)
-    highest_salesValue_day = highest_sales_value(sales_value_daily)
+
+    highest_salesVolume_day = highest_sales_volume(sales_volume)
+    highest_salesValue_day = highest_sales_value(sales_value)
     highest_products_sold = most_products_sold(product_sales)
     highest_sales_staff = highest_sales_staff_monthly(monthly_sales_staff)
     highest_hour_onAvg = highest_hour_avg_transactions(avg_transaction_hourly)
@@ -34,12 +37,14 @@ def report_metrics(sales_volume_daily, sales_value_daily, product_sales, monthly
 
 
     #Print a report of the metrics
-    print("Highest sales volume in a day:")
-    print(f"{highest_salesVolume_day} ({sales_volume_daily[highest_salesVolume_day]} items)")
+    print(f"Highest sales volume in a day: {highest_salesVolume_day} ({sales_volume[highest_salesVolume_day]} items)")
+    print(f"Highest sales value day: {highest_salesValue_day} ($ {sales_value[highest_salesValue_day]:.2f})")
+    print(f"Most sold product: {highest_products_sold[0] ({highest_products_sold[1]})}")
+    print(f"Highest sales staff per month: {highest_sales_staff}")
+    print(f"Highest hour of the day by average transaction volume: {highest_hour_onAvg}:00")
 
 
 if __name__ == "__main__":
-    print("\n Monieshop Analytics Report \n")
 
     #Check if sample data directory actually exists first
     if not os.path.exists(DATA_DIR):
@@ -47,7 +52,7 @@ if __name__ == "__main__":
         exit(1)
     
     #If directory exists, process transaction files
-    process_files(DATA_DIR) #taking DATA_DIR as folder_path
+    sales_volume, sales_value, product_sales, monthly_sales_staff, avg_transaction_hourly = process_files(DATA_DIR) #taking DATA_DIR as folder_path
 
     #Show report
-    report_metrics(sales_volume, sales_value, products_sold, sales_staff_monthly, avg_transaction_hour)
+    report_metrics(sales_volume, sales_value, product_sales, monthly_sales_staff, avg_transaction_hourly)

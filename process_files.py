@@ -5,18 +5,33 @@ from collections import defaultdict
 
 SAMPLE_DIR = "sample-data"
 
-# initialise dictionaries to store metrics data values to handle mapping values     
-sales_volume =  {}
-sales_value = {}
-products_sold = {}
-sales_staff_monthly = defaultdict(dict)
-avg_transaction_hour = defaultdict(list)
 
-def process_transactions(file_path):
+def process_files(data_dir):
+    # initialise dictionaries to store metrics data values to handle mapping values     
+    sales_volume =  {}
+    sales_value = {}
+    products_sold = {}
+    sales_staff_monthly ={}
+    avg_transaction_hour = {}
+
+    for folder in os.listdir(data_dir):
+        folder_path = os.path.join(data_dir, folder)
+        if os.path.isdir(folder_path): #ensure folder path is directory
+            #get .txt files in the directory
+            for file_path in glob.glob(os.path.join(folder_path, "*.txt")):
+                process_transactions(file_path, sales_volume, sales_value, products_sold, sales_staff_monthly, avg_transaction_hour) #call function to process transactions
+    
+    return sales_volume, sales_value, products_sold, sales_staff_monthly, avg_transaction_hour
+                                       
+
+def process_transactions(file_path, sales_volume, sales_value, products_sold, sales_staff_monthly, avg_transaction_hour ):
     #read transaction files and updates dictionary
     with open(file_path, "r") as file:
-        for txt in file:
-            line = txt.strip().split(',') # notice that each component/variable of a transaction line is split by a comma
+        for line in file:
+            line = line.strip().split(',') # notice that each component/variable of a transaction line is split by a comma
+            if len(line) != 4:
+                continue
+
             # A transaction line's components/variiables
             sales_staff_id = int(line[0])
             transaction_date_time = line[1]
@@ -49,21 +64,3 @@ def process_transactions(file_path):
         if transaction_hour not in avg_transaction_hour:
             avg_transaction_hour[transaction_hour] = []
         avg_transaction_hour[transaction_hour].append(total_products)
-
-
-def process_files(data_dir):
-    #read all transaction files in the particular directory/folder, e,g: test-case-1
-    for folder in os.listdir(data_dir):
-        folder_path = os.path.join(data_dir, folder)
-        if os.path.isdir(folder_path): #ensure folder path is directory
-            #get .txt files in the directory
-            for file_path in glob.glob(os.path.join(folder_path, "*.txt")):
-                process_transactions(file_path) #call function to process transactions
-                                       
-
-
-
-
-
-
-
