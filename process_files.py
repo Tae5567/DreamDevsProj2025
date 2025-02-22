@@ -3,8 +3,6 @@ import glob
 import datetime
 
 
-SAMPLE_DIR = "sample-data"
-
 
 def process_files(data_dir):
     # initialise dictionaries to store metrics data values to handle mapping values     
